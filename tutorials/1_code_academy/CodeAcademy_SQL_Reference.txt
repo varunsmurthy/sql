@@ -1,0 +1,183 @@
+CREATE TABLE table_name (
+   column_1 data_type, 
+   column_2 data_type, 
+   column_3 data_type
+);
+
+CREATE TABLE celebs (
+   id INTEGER, 
+   name TEXT, 
+   age INTEGER
+);
+
+CREATE TABLE celebs (
+   id INTEGER PRIMARY KEY, 
+   name TEXT UNIQUE,
+   date_of_birth TEXT NOT NULL,
+   date_of_death TEXT DEFAULT 'Not Applicable'
+);
+
+INSERT INTO celebs (id, name, age) 
+VALUES (1, 'Justin Bieber', 22); 
+
+INSERT INTO celebs  
+VALUES (1, 'Justin Bieber', 22); 
+
+ALTER TABLE celebs 
+ADD COLUMN twitter_handle TEXT;
+
+SELECT * FROM celebs;
+SELECT name FROM celebs;
+
+UPDATE celebs 
+SET twitter_handle = '@taylorswift13' 
+WHERE id = 4; 
+
+DELETE FROM celebs 
+WHERE twitter_handle IS NULL;
+
+============================================================================================
+
+SELECT name, genre 
+FROM movies;
+
+SELECT name AS 'Titles'
+FROM movies;
+
+SELECT DISTINCT genre 
+FROM movies;
+
+SELECT * 
+FROM movies 
+WHERE imdb_rating < 5;
+
+SELECT * 
+FROM movies
+WHERE name LIKE 'Se_en';
+
+SELECT * 
+FROM movies
+WHERE name LIKE 'A%';
+
+SELECT * 
+FROM movies
+WHERE name LIKE '%man%';
+
+SELECT name
+FROM movies 
+WHERE imdb_rating IS NULL;
+
+SELECT *
+FROM movies
+WHERE name BETWEEN 'A' AND 'J';
+
+SELECT * 
+FROM movies
+WHERE year BETWEEN 1990 AND 1999
+   AND genre = 'romance';
+   
+SELECT *
+FROM movies
+WHERE year > 2014
+   OR genre = 'action';
+   
+SELECT *
+FROM movies
+ORDER BY name;
+
+SELECT *
+FROM movies
+WHERE imdb_rating > 8
+ORDER BY year DESC;   
+
+SELECT *
+FROM movies
+LIMIT 10;
+
+SELECT name,
+ CASE
+  WHEN imdb_rating > 8 THEN 'Fantastic'
+  WHEN imdb_rating > 6 THEN 'Poorly Received'
+  ELSE 'Avoid at All Costs'
+ END AS 'Review'
+FROM movies;
+============================================================================================
+
+SELECT COUNT(*) 
+FROM fake_apps;
+
+SELECT COUNT(*) 
+FROM fake_apps
+WHERE price == 0;
+
+SELECT SUM(downloads)
+FROM fake_apps;
+
+SELECT MAX(downloads)
+FROM fake_apps;
+
+SELECT AVG(downloads)
+FROM fake_apps;
+
+SELECT name, ROUND(price, 0)
+FROM fake_apps;
+
+=============================================================================================
+
+SELECT price, COUNT(*) 
+FROM fake_apps
+GROUP BY price;
+
+SELECT price,COUNT(*) 
+FROM fake_apps
+WHERE downloads > 20000
+GROUP BY price;
+
+SELECT year, AVG(imdb_rating)
+FROM movies
+GROUP BY year
+ORDER BY year;
+
+SELECT ROUND(imdb_rating), COUNT(name)
+FROM movies
+GROUP BY ROUND(imdb_rating)
+ORDER BY ROUND(imdb_rating);
+
+SELECT category, price, AVG(downloads)
+FROM fake_apps
+GROUP BY category, price;
+
+SELECT price, AVG(downloads), COUNT(*)
+FROM fake_apps
+GROUP BY price
+HAVING COUNT(*) > 10;
+
+==============================================================================================
+
+SELECT *
+FROM orders
+JOIN customers ON orders.customer_id = customers.customer_id;
+  
+  
+SELECT orders.order_id, customers.customer_name
+FROM orders
+JOIN customers ON orders.customer_id = customers.customer_id;
+
+SELECT *
+FROM orders
+JOIN customers ON orders.customer_id = customers.customer_id
+WHERE orders.size > 10;
+
+SELECT *
+FROM newspaper
+LEFT JOIN online on newspaper.id = online.id
+WHERE online.id is NULL;
+
+SELECT shirts.shirt_color,
+   pants.pants_color
+FROM shirts
+CROSS JOIN pants;
+
+SELECT * FROM newspaper
+UNION
+SELECT * FROM online;
